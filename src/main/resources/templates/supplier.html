@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--Icon-->
+    <link rel="icon" href="/icons/computer.png">
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="/bootstrap 5.3.3/css/bootstrap.min.css" />
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="/fontAwsome/css/all.css" />
+    <!--Data Tables-->
+    <link rel="stylesheet" href="/dataTable/datatables.min.css" />
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="/css/supplier/supplier.css" />
+
+    <title>Suppiler Management</title>
+  </head>
+
+  <body style="background: rgb(241, 241, 238)">
+    <!--Main Container-->
+
+    <div class="Container">
+      <div class="row vstack gap-2 m-4">
+        <!--Nav-->
+
+        <div
+          class="col border rounded-2"
+          style="background: rgb(255, 255, 255)"
+        >
+          <p class="pt-2">Home /Supplier</p>
+        </div>
+
+        <!--Add User-->
+
+        <div
+          class="d-flex text-center justify-content-end align-items-center border rounded-2"
+          style="background: rgb(255, 255, 255); min-height: 50px"
+        >
+          <button
+            type="button"
+            class="btn btn-primary mb-3 justify-content-center align-items-center"
+            data-bs-toggle="modal"
+            id="inUser"
+            data-bs-target="#staticBackdrop"
+            style="box-shadow: 3px 3px 5px rgb(158, 157, 157); margin-top: 15px"
+          >
+            Add User
+          </button>
+        </div>
+
+        <!--Form-->
+
+        <!-- Form Modal -->
+
+        <div
+          class="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered"
+            style="min-width: 700px"
+          >
+            <div class="modal-content">
+              <div class="modal-header" style="background: #002c54">
+                <h1
+                  class="modal-title fs-5"
+                  id="staticBackdropLabel"
+                  style="color: antiquewhite"
+                >
+                  <i
+                    class="fa-solid fa-web-awesome"
+                    style="color: antiquewhite"
+                  ></i>
+                  User Registration
+                </h1>
+                <button
+                  id="formClose"
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  style="background-color: antiquewhite"
+                ></button>
+              </div>
+
+              <div class="modal-body" style="background: #e4ddec">
+                <form action="" id="myForm" class="m-4">
+                  <div class="Container">
+                    <!--full name-->
+                    <div class="row mb-4">
+                      <label for="" class="col-md-3"
+                        >Full name <span class="text-danger"> *</span></label
+                      >
+                      <input
+                        type="text"
+                        id="inFullName"
+                        class="col-md-9"
+                        onchange="textValidate(this,'^[A-Z][a-z]{1,}(?: [A-Z][a-z]{1,})*$',window.userRecord,'fullName')"
+                        placeholder="eg: Lalith Jayasinghe"
+                        name="fullName"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        data-bs-custom-class="custom-tooltip"
+                        data-bs-title="Name must start with a capital letter, followed by lowercase letters, no numbers or special characters allowed"
+                      />
+                    </div>
+
+                    <!--role and calling name-->
+                    <div class="row">
+                      <!--calling name-->
+                      <div class="col-md-6">
+                        <div class="row mb-4 d-flex justify-content-between">
+                          <label
+                            for=""
+                            class="col-md-3"
+                            style="min-width: 150px"
+                            >Calling name
+                            <span class="text-danger"> *</span></label
+                          >
+                          <select
+                            name="callingName"
+                            id="inCname"
+                            class="col-md-4"
+                            style="min-width: 160px"
+                            onchange="validateChange(this,window.userRecord,'callingName')"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="calling for the user"
+                          ></select>
+                        </div>
+                      </div>
+                      <!--role-->
+                      <div class="col-md-6">
+                        <div class="row mb-4 d-flex justify-content-between">
+                          <label
+                            for=""
+                            class="col-md-3"
+                            style="min-width: 100px"
+                            >Role <span class="text-danger"> *</span></label
+                          >
+                          <select
+                            name="role"
+                            id="inRole"
+                            class="col-md-4"
+                            style="min-width: 188px"
+                            onchange="validateChange(this,window.userRecord,'role')"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="type of user"
+                          ></select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!--nic & dob -->
+                    <div class="row">
+                      <!--nic-->
+                      <div class="col-md-6">
+                        <div class="row mb-4">
+                          <label for="" class="col-md-6"
+                            >NIC <span class="text-danger"> *</span></label
+                          >
+                          <input
+                            type="text"
+                            class="col-md-6 invalid"
+                            id="inNIC"
+                            onfocusout="textValidate(this, '^(([56789]{1})([0-9]{1})([01235678]{1})([0-9]{6})([vVxX]))|(([12]{1})([09]{1})([0-9]{2})([01235678]{1})([0-9]{7}))$', window.userRecord, 'nic')"
+                            placeholder="eg: 855420159v"
+                            name="nic"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="Enter a valid NIC: 9 digits (old) or 12 digits (new)"
+                          />
+                        </div>
+                      </div>
+
+                      <!--dob-->
+                      <div class="col-md-6">
+                        <div class="row mb-4">
+                          <label for="" class="col-md-5">Date Of Birth</label>
+                          <input
+                            type="date"
+                            class="col-md-7"
+                            id="inDOB"
+                            onkeydown="return false;"
+                            readonly
+                            onchange="validateChange(this,window.userRecord,'dob')"
+                            name="dob"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <!--email address-->
+                    <div class="row mb-4">
+                      <label for="" class="col-md-3"
+                        >Email <span class="text-danger"> *</span></label
+                      >
+                      <input
+                        type="text"
+                        class="col-md-9 valid"
+                        id="inputEmail"
+                        onfocusout="textValidate(this,'^[a-zA-Z0-9._%+-]+[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$',window.userRecord,'email')"
+                        placeholder="eg: Abc@example.com"
+                        name="email"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        data-bs-custom-class="custom-tooltip"
+                        data-bs-title="Email format: Local part (letters, numbers, .-_), @ symbol, domain (letters, numbers, .-), and a TLD"
+                      />
+                    </div>
+
+                    <!--Contact-->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="row mb-4">
+                          <label for="" class="col-md-6"
+                            >Mobile Number
+                            <span class="text-danger"> *</span></label
+                          >
+                          <input
+                            type="text"
+                            class="col-md-6 valid"
+                            id="inMobileNumber"
+                            onfocusout="textValidate(this,'^07[01245678][0-9]{7}$',window.userRecord,'mobileNumber')"
+                            placeholder="eg: 0702988214"
+                            name="mobileNumber"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="Number must start with 07, followed by any digit except 3 or 9, and then 7 more digits"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="row mb-4">
+                          <label for="" class="col-md-5">Land Number</label>
+                          <input
+                            type="text"
+                            class="col-md-7 valid"
+                            id="inLandNumber"
+                            onfocusout="textValidate(this, '^(063|025|036|055|057|065|032|011|091|033|047|051|067|034|081|035|037|023|066|041|054|031|052|038|027|045|026|024)\\d{7}$',window.userRecord,'landNumber')"
+                            placeholder="eg: 0252204012"
+                            name="landNumber"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="A valid Sri Lankan landline telephone number"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <!--contact method-->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="row mb-4">
+                          <label
+                            class="col-md-5"
+                            style="min-width: 150px"
+                            for="inContactMethod"
+                            >Contact via
+                            <span class="text-danger"> *</span></label
+                          >
+                          <div class="col-md-5 d-flex justify-content-start">
+                            <select
+                              name="preferedContact"
+                              id="inContactMethod"
+                              style="min-width: 160px"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="right"
+                              data-bs-custom-class="custom-tooltip"
+                              data-bs-title="Prefered contact method"
+                              placeholder="Enter your text here..."
+                              onchange="validateChange(this,window.userRecord,'preferedContact')"
+                            >
+                              <option value='' selected disabled>
+                                Select Method
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Gender Select-->
+                      <div class="col-md-6">
+                        <div class="row mb-4 d-flex justify-content-start">
+                          <label class="col-md-5" for="">Gender</label>
+                          <input
+                            class="col-md-7"
+                            disabled
+                            name="gender"
+                            id="inGender"
+                            style="min-width: 187px"
+                            placeholder="Male or Female"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <!--address-->
+                    <div class="row mb-4">
+                      <label for="" class="col-md-3"
+                        >Address <span class="text-danger"> *</span></label
+                      >
+                      <input
+                        type="text"
+                        class="col-md-9"
+                        id="inAddress"
+                        onfocusout="textValidate(this, '^[A-Za-z0-9\',.\\s/-]+$',window.userRecord,'address')"
+                        placeholder="eg: 123/A Main Street, Colombo"
+                        name="address"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        data-bs-custom-class="custom-tooltip"
+                        data-bs-title="A valid Sri Lankan home or workplace address"
+                      />
+                    </div>
+                    <div class="row mb-4">
+                      <label for="" class="col-md-3">Notes</label>
+                      <textarea
+                        class="col-md-9"
+                        id="inNotes"
+                        name="notes"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        data-bs-custom-class="custom-tooltip"
+                        data-bs-title="Notes or Remarks"
+                        placeholder="Enter your text here..."
+                      ></textarea>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer d-flex justify-content-around mb-4">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="inBtnSubmit"
+                  style="min-width: 200px"
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="inBtnClear"
+                  style="min-width: 200px"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View Record Model -->
+        <div
+          class="modal fade"
+          id="printModal"
+          tabindex="-1"
+          aria-labelledby="printModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="printModalLabel">
+                  <i class="fa-solid fa-file-invoice"></i> Record Details
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body" id="modalContent">
+                <table class="table">
+                  <tbody id="viewRecordTbl"></tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="printModalContent()"
+                >
+                  Print
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Table-->
+        <div
+          class="col border rounded-2"
+          style="background: rgb(255, 255, 255)"
+        >
+          <table id="empTable" class="table table-hover col-lg-12">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>NIC</th>
+                <th>Role</th>
+                <th>State</th>
+                <th class="text-center">Modify</th>
+              </tr>
+            </thead>
+            <tbody id="employeeTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+     <!--jQuery-->
+     <script src="/jQuery/jquery-3.7.1.min.js"></script>
+    <!--SweetAlert2-->
+    <script src="/sweetAlert/dist/sweetalert2.all.min.js"></script>  
+    <!--Bootstrap jS-->
+    <script src="/bootstrap 5.3.3/js/bootstrap.bundle.min.js"></script>
+    <!--Custom js-->
+    <script src="/js/employee.js"></script>
+    <script src="/uiController/user.js"></script>
+    <script src="/script/validation/user_validation.js"></script>
+    <!--Datatables js-->
+    <script src="/dataTable/datatables.js"></script>
+    <!--Common functions-->
+    <script src="/script/common functions/viewRecord.js"></script>
+    <script src="/script/common functions/tableGeneration.js"></script>
+    <!--Tooltip js -->
+    <script>
+      const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+      );
+      const tooltipList = [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+      );
+    </script>
+  </body>
+</html>
